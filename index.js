@@ -19,10 +19,19 @@ if(process.env.NODE_ENV == 'development') {
     app.use(cors()) //open cors for every origins
 }
 
+if(require('./config/cors').origin === '*') {
+    app.use(cors())
+}
+
+app.use(express.static('public'))
+
 const port = process.env.PORT || 8080
 
 
+require('./utils/database/mongodb')()
+
 app.listen(port)
+
 
 console.log('\x1b[32m%s\x1b[0m','Status: OK')
 console.log('\x1b[36m%s\x1b[0m',`App is listening at port ${port}`)
